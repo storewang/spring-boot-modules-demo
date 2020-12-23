@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>com.alipay.sofa</groupId>
+        <artifactId>sofaboot-dependencies</artifactId>
+        <version>2.5.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.ai.spring</groupId>
+    <version>0.0.1-SNAPSHOT</version>
+    <artifactId>spring-boot-sofa-ark-demo</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- 类隔离 -->
+        <dependency>
+            <groupId>com.alipay.sofa</groupId>
+            <artifactId>sofa-ark-springboot-starter</artifactId>
+        </dependency>
+        <!-- ark plugin -->
+        <dependency>
+            <groupId>com.ai.spring</groupId>
+            <artifactId>spring-boot-sofa-ark-plugin-pojo</artifactId>
+            <classifier>ark-plugin</classifier>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.ai.spring</groupId>
+            <artifactId>spring-boot-sofa-ark-module1</artifactId>
+            <classifier>ark-plugin</classifier>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.ai.spring</groupId>
+            <artifactId>spring-boot-sofa-ark-module2</artifactId>
+            <classifier>ark-plugin</classifier>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <!--common, just for compile success-->
+        <dependency>
+            <groupId>com.ai.spring</groupId>
+            <artifactId>spring-boot-sofa-ark-plugin-pojo</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.ai.spring</groupId>
+            <artifactId>spring-boot-sofa-ark-module1</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.ai.spring</groupId>
+            <artifactId>spring-boot-sofa-ark-module2</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <!--<plugin>-->
+                <!--<groupId>org.springframework.boot</groupId>-->
+                <!--<artifactId>spring-boot-maven-plugin</artifactId>-->
+            <!--</plugin>-->
+            <plugin>
+                <groupId>com.alipay.sofa</groupId>
+                <artifactId>sofa-ark-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>default-cli</id>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <!-- 配置信息 -->
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

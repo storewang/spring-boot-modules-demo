@@ -1,0 +1,19 @@
+.DS_Store
+node_modules/
+**/*.log
+*.iml
+**/target/**
+**/*.iml
+
+# Editor directories and files
+.idea
+.idea/**
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.local
+
+### VS Code ###
+.vscode/

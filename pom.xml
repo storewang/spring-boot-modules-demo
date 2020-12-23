@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<parent>
+		<groupId>com.alipay.sofa</groupId>
+		<artifactId>sofaboot-dependencies</artifactId>
+		<version>3.1.5</version>
+	</parent>
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.ai.spring</groupId>
+	<artifactId>my-work-project</artifactId>
+	<packaging>pom</packaging>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>my-work-project</name>
+
+	<properties>
+		<java.version>1.8</java.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+	</properties>
+
+	<modules>
+		<module>spring-boot-demo</module>
+		<module>spring-boot-sofa-module-api</module>
+		<module>spring-boot-sofa-module-impl</module>
+		<module>spring-boot-sofa-module-dao</module>
+		<module>spring-boot-sofa-module-write</module>
+		<module>spring-boot-sofa-test</module>
+        <module>spring-boot-sofa-ark-plugin-pojo</module>
+		<module>spring-boot-sofa-ark-module1</module>
+		<module>spring-boot-sofa-ark-module2</module>
+		<module>spring-boot-sofa-ark-demo</module>
+		<module>spring-boot-sofa-rpc-test</module>
+        <module>spring-boot-sofa-dashboard</module>
+    </modules>
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+	</dependencies>
+</project>

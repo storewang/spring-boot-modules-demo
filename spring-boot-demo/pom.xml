@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.ai.spring</groupId>
+		<artifactId>my-work-project</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<groupId>com.ai.spring</groupId>
+	<artifactId>spring-boot-demo</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>spring-boot-demo</name>
+
+	<properties>
+		<java.version>1.8</java.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<!-- sofa 模块化 -->
+		<dependency>
+			<groupId>com.alipay.sofa</groupId>
+			<artifactId>isle-sofa-boot-starter</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.alipay.sofa</groupId>
+			<artifactId>runtime-sofa-boot-starter</artifactId>
+		</dependency>
+
+		<!-- dal -->
+		<dependency>
+			<groupId>com.ai.spring</groupId>
+			<artifactId>spring-boot-sofa-module-dal</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<!-- api -->
+		<dependency>
+			<groupId>com.ai.spring</groupId>
+			<artifactId>spring-boot-sofa-module-api</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.ai.spring</groupId>
+			<artifactId>spring-boot-sofa-module-impl</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.ai.spring</groupId>
+			<artifactId>spring-boot-sofa-module-write</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>javassist</groupId>
+			<artifactId>javassist</artifactId>
+			<version>3.10.0.GA</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+</project>
