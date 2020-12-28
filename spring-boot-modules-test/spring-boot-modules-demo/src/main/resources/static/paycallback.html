@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>SseEmitter 支付回调样例页面</title>
+
+    <!-- vue库 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-router/dist/vue-router.js"></script>
+    <!-- ajax库 -->
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
+</head>
+<body>
+    <script type="text/x-template" id="emitterForm">
+        <div>
+            <form :action="formAction" method="get">
+                <p>{{ message }}</p>
+                <input type="text" name="payRecordId" :value="payId" readonly>
+                <input type="button" value="提交" v-if="formBtn" @click="payCallback">
+                <input type="button" value="取消监听" v-if="closeBtn" @click="closeListener">
+            </form>
+        </div>
+    </script>
+
+    <div id="template-app01">
+        <my-hello></my-hello>
+    </div>
+
+    <script>
+        // 引用模板实例
+        var templateApp01 = new Vue({
+            el:'#template-app01',
+            components:{
+                'my-hello':{
+                    name:'emitterForm',
+                    template:'#emitterForm',
+                    data(){
+                        return {
+                            message: '',
+                            payId: 10001,
+                            formBtn: true,
+                            closeBtn: false,
+                            formAction: '/pay-callback'
+                        }
+                    },
+                    methods: {
+                        payCallback: function () {
+                            var getUrl  = this.formAction + '?payRecordId=' + this.payId;
+                            var thisobj = this;
+                            axios.get(getUrl).then(function(response){
+                                console.log("message","支付回调",response);
+                                thisobj.message  = response.data;
+                                thisobj.formBtn  = false;
+                                thisobj.closeBtn = true;
+                            }).catch(function(error){
+                                thisobj.message = '发送回调消息失败！！！'
+                            })
+                        },
+                        closeListener: function () {
+                            var getUrl = '/close-listener?payRecordId=' + this.payId;
+                            var thisobj = this;
+                            axios.get(getUrl).then(function(response){
+                                console.log("message","关闭回调消息",response);
+                                thisobj.message  = response.data;
+                                thisobj.formBtn  = true;
+                                thisobj.closeBtn = false;
+                            }).catch(function(error){
+                                thisobj.message = '关闭回调消息失败！！！'
+                            })
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>

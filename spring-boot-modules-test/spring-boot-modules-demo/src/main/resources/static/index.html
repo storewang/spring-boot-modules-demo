@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>SseEmitter 服务器推送样例</title>
+    </head>
+    <body>
+    <script type="text/javascript">
+
+        try{
+            var sse = new EventSource("/pay-listener?payRecordId=10001");
+
+            sse.onmessage = function (e) {
+                console.log("message",e.data,e)
+            }
+
+            /****
+            // 监听指定事件, (就不会进入onmessage了)
+            sse.addEventListener("me",function (e) {
+                console.log("me event",e.data);
+
+                // 如果不关闭,会自动重连
+                if (e.data == 3){
+                    sse.close();
+                }
+            })*****/
+        }catch (e){
+            console.log("你的浏览器不支持 Sse emitter");
+        }
+    </script>
+
+    </body>
+</html>
