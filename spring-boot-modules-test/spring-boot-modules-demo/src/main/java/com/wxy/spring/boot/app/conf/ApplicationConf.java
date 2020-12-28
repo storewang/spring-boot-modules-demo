@@ -16,8 +16,8 @@ public class ApplicationConf {
         System.out.println("--------ApplicationConf-------");
         ThreadPoolTaskExecutor poolExecutor = new ThreadPoolTaskExecutor();
         poolExecutor.setCorePoolSize(1);
-        poolExecutor.setQueueCapacity(3);
-        poolExecutor.setMaxPoolSize(3);
+        poolExecutor.setQueueCapacity(1);
+        poolExecutor.setMaxPoolSize(4);
         poolExecutor.setKeepAliveSeconds(8);
         poolExecutor.setThreadNamePrefix("sub-modules");
         poolExecutor.setAllowCoreThreadTimeOut(true);
@@ -26,6 +26,7 @@ public class ApplicationConf {
         poolExecutor.execute(new ModuleApplicationStarter("user-service","com.wxy.spring.boot.modules.demo.user",parent));
         poolExecutor.execute(new ModuleApplicationStarter("role-service","com.wxy.spring.boot.modules.demo.sys",parent));
         poolExecutor.execute(new ModuleApplicationStarter("bus-service","com.wxy.spring.boot.modules.demo.bus",parent));
+        poolExecutor.execute(new ModuleApplicationStarter("log-service","com.wxy.spring.boot.modules.demo.log",parent));
 
     }
 

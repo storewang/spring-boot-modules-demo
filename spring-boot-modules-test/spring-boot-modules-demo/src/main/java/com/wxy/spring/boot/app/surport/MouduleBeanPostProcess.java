@@ -27,18 +27,15 @@ public class MouduleBeanPostProcess implements InstantiationAwareBeanPostProcess
 
     @Override
     public Object postProcessBeforeInstantiation(Class<?> beanClass, String beanName) throws BeansException {
-        System.out.println(moduleName + "-----------before init class :-----------"+beanClass);
         return null;
     }
 
     @Override
     public boolean postProcessAfterInstantiation(Object bean, String beanName) throws BeansException {
-        System.out.println(moduleName + "-----------after init bean :-----------"+beanName);
         return true;
     }
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
-        System.out.println(moduleName + "-----------post after init bean :-----------"+beanName);
         String name = bean.getClass().getName();
         if (name.indexOf(basePackage)>-1){
             ModuleApplicationContext.addBeans(name,bean);
@@ -49,7 +46,6 @@ public class MouduleBeanPostProcess implements InstantiationAwareBeanPostProcess
     @Override
     public PropertyValues postProcessPropertyValues(
             PropertyValues pvs, PropertyDescriptor[] pds, Object bean, String beanName) throws BeansException {
-        System.out.println(moduleName + "-----------set bean's propertys :-----------" + beanName);
         return pvs;
     }
     @Override

@@ -29,8 +29,6 @@ public class BusinessController implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        //busniseService = ModuleApplicationContext.getModuleApplication("bus-service").getBean(IBusniseService.class);
-        //busniseService = (IBusniseService)ModuleApplicationContext.getBean("com.wxy.spring.boot.modules.demo.bus.BusniseService");
         ModuleApplicationContext.LazyDependency lazyDependency = new ModuleApplicationContext.LazyDependency();
         lazyDependency.setModuleName("main-application");
         lazyDependency.setBeanName("businessController");

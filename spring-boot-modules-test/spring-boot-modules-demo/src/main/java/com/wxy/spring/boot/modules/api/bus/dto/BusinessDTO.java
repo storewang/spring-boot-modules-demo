@@ -1,5 +1,7 @@
 package com.wxy.spring.boot.modules.api.bus.dto;
 
+import com.wxy.spring.boot.modules.api.log.dto.LogDTO;
+
 import java.util.List;
 
 /**
@@ -13,6 +15,15 @@ public class BusinessDTO {
     private Long userId;
     private String userName;
     private List<String> roleNames;
+    private List<LogDTO> logs;
+
+    public List<LogDTO> getLogs() {
+        return logs;
+    }
+
+    public void setLogs(List<LogDTO> logs) {
+        this.logs = logs;
+    }
 
     public Long getUserId() {
         return userId;

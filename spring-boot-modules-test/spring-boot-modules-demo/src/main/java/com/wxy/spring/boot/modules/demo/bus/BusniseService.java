@@ -4,6 +4,7 @@ import com.wxy.spring.boot.modules.api.bus.IBusniseService;
 import com.wxy.spring.boot.modules.api.bus.dto.BusinessDTO;
 import com.wxy.spring.boot.modules.api.sys.dto.RoleDTO;
 import com.wxy.spring.boot.modules.api.user.dto.UserDTO;
+import com.wxy.spring.boot.modules.demo.log.LogService;
 import com.wxy.spring.boot.modules.demo.sys.RoleService;
 import com.wxy.spring.boot.modules.demo.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,8 @@ class BusniseService implements IBusniseService {
     private UserService userService;
     @Autowired
     private RoleService roleService;
-
+    @Autowired
+    private LogService logService;
     @Override
     public BusinessDTO findByUserId(Long userId) {
         UserDTO userDTO = userService.findById(userId);
@@ -35,6 +37,7 @@ class BusniseService implements IBusniseService {
         businessDTO.setUserId(userId);
         businessDTO.setUserName(userDTO.getUserName());
         businessDTO.setRoleNames(roleDTOS.stream().map(RoleDTO::getRoleName).collect(Collectors.toList()));
+        businessDTO.setLogs(logService.getLogByUserId(userId));
 
         return businessDTO;
     }
@@ -48,6 +51,7 @@ class BusniseService implements IBusniseService {
         businessDTO.setUserId(userDTO.getUserId());
         businessDTO.setUserName(userDTO.getUserName());
         businessDTO.setRoleNames(roleDTOS.stream().map(RoleDTO::getRoleName).collect(Collectors.toList()));
+        businessDTO.setLogs(logService.getLogByUserId(userDTO.getUserId()));
 
         return businessDTO;
     }
