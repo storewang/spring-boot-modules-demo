@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: gemini-langchain-demo
+
+langchain4j:
+  google-ai-gemini:
+    chat-model:
+      api-key: xxxx
+      model-name: xxxx
+
+logging:
+  level:
+    dev:
+      langchain4j=DEBUG:
