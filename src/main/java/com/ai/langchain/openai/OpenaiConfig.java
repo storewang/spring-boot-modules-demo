@@ -7,6 +7,10 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.function.Supplier;
+
 import static com.ai.langchain.openai.Properties.PREFIX;
 
 @Configuration
@@ -18,6 +22,7 @@ public class OpenaiConfig {
     OpenAiChatModel openAiChatModel(Properties properties) {
         ChatModelProperties chatModelProperties = properties.chatModel();
         return OpenAiChatModel.builder()
+            .listeners(List.of(new CustomerChatModelListener()))
             .baseUrl(chatModelProperties.baseUrl())
             .apiKey(chatModelProperties.apiKey())
             .organizationId(chatModelProperties.organizationId())
@@ -157,7 +162,35 @@ public class OpenaiConfig {
 
     @Bean
     @ConditionalOnMissingBean
-    OpenAiTokenizer openAiTokenizer() {
-        return new OpenAiTokenizer();
+    OpenAiTokenizer openAiTokenizer(Properties properties) {
+        String modelName = null;
+        modelName = getModelName(modelName,properties,() ->{
+            return Optional.ofNullable(properties.chatModel()).map(m->m.modelName()).orElse(null);
+        });
+        modelName = getModelName(modelName,properties,() ->{
+            return Optional.ofNullable(properties.streamingChatModel()).map(m->m.modelName()).orElse(null);
+        });
+        modelName = getModelName(modelName,properties,() ->{
+            return Optional.ofNullable(properties.languageModel()).map(m->m.modelName()).orElse(null);
+        });
+        modelName = getModelName(modelName,properties,() ->{
+            return Optional.ofNullable(properties.streamingLanguageModel()).map(m->m.modelName()).orElse(null);
+        });
+        modelName = getModelName(modelName,properties,() ->{
+            return Optional.ofNullable(properties.embeddingModel()).map(m->m.modelName()).orElse(null);
+        });
+        modelName = getModelName(modelName,properties,() ->{
+            return Optional.ofNullable(properties.imageModel()).map(m->m.modelName()).orElse(null);
+        });
+        return new OpenAiTokenizer(modelName);
+    }
+
+    private String getModelName(String modelName, Properties properties, Supplier<String> supplier){
+        modelName = Optional.ofNullable(modelName).orElseGet(()->{
+            return Optional.ofNullable(properties)
+                .map(p -> supplier.get())
+                .orElse(null);
+        });
+        return modelName;
     }
 }

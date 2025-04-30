@@ -22,8 +22,8 @@ public class GoogleAiGeminiChatModelTest implements CommandLineRunner {
     private OpenAiChatModel openAiChatModel;
 
     public void testGeminiChat(){
-        ChatMessage systemMessage = new SystemMessage("你是一个中文翻译助手");
-        ChatMessage aiMessage = new UserMessage("翻译下面这个句子: You are the fairest of them all");
+        ChatMessage systemMessage = new SystemMessage("你是一个英文翻译助手");
+        ChatMessage aiMessage = new UserMessage("翻译下面这个句子: 春风十里不如你");
         ChatRequest request = ChatRequest.builder()
             .messages(systemMessage,aiMessage)
             .build();
@@ -45,5 +45,7 @@ public class GoogleAiGeminiChatModelTest implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         testOpenaiChat();
+
+        testGeminiChat();
     }
 }
