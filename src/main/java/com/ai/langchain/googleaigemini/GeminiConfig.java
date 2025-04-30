@@ -4,10 +4,10 @@ import dev.langchain4j.model.chat.listener.ChatModelListener;
 import dev.langchain4j.model.googleai.*;
 import dev.langchain4j.model.googleai.GeminiFunctionCallingConfig;
 import org.springframework.beans.factory.ObjectProvider;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 import java.util.Arrays;
 import java.util.List;
@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 import static com.ai.langchain.googleaigemini.Properties.PREFIX;
 
-@AutoConfiguration
+@Configuration
 @EnableConfigurationProperties(Properties.class)
 public class GeminiConfig {
 

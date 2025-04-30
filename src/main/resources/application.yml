@@ -6,9 +6,12 @@ langchain4j:
   google-ai-gemini:
     chat-model:
       api-key: xxxx
-      model-name: xxxx
+      model-name: gemini-2.0-flash
 
 logging:
   level:
+    com:
+      ai:
+        langchain: DEBUG
     dev:
-      langchain4j=DEBUG:
+      langchain4j: DEBUG
