@@ -3,6 +3,11 @@ spring:
     name: gemini-langchain-demo
 
 langchain4j:
+  open-ai:
+    chat-model:
+      api-key: xxxx
+      model-name: Qwen/Qwen2.5-7B-Instruct
+      base-url: https://api.siliconflow.cn
   google-ai-gemini:
     chat-model:
       api-key: xxxx
