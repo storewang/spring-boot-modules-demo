@@ -39,3 +39,5 @@ bin/
 pkg/
 golang-core/*/.vscode
 github.com
+
+**/test/resources/

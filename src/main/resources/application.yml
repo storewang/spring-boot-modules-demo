@@ -1,13 +1,24 @@
 spring:
   application:
     name: gemini-langchain-demo
-
+server:
+  port: 8888
 langchain4j:
   open-ai:
     chat-model:
       api-key: xxxx
       model-name: Qwen/Qwen2.5-7B-Instruct
+      #model-name: Pro/Qwen/Qwen2-VL-7B-Instruct
       base-url: https://api.siliconflow.cn
+      log-requests: true
+      log-responses: true
+    streaming-chat-model:
+      api-key: xxxx
+      model-name: Qwen/Qwen2.5-7B-Instruct
+      #model-name: Pro/Qwen/Qwen2-VL-7B-Instruct
+      base-url: https://api.siliconflow.cn
+      log-requests: true
+      log-responses: true
   google-ai-gemini:
     chat-model:
       api-key: xxxx
@@ -19,4 +30,5 @@ logging:
       ai:
         langchain: DEBUG
     dev:
+      ai4j: DEBUG
       langchain4j: DEBUG

@@ -1,5 +1,11 @@
 package com.ai.langchain.openai;
 
+import com.ai.langchain.fuc.handles.InvoiceHandler;
+import com.ai.langchain.service.ChatAssistant;
+import com.ai.langchain.service.FunctionAssistant;
+import com.ai.langchain.service.MemoryChatAssistant;
+import com.ai.langchain.service.StreamChatAssistant;
+import dev.langchain4j.memory.chat.MessageWindowChatMemory;
 import dev.langchain4j.model.openai.*;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -7,7 +13,6 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
 
@@ -22,7 +27,7 @@ public class OpenaiConfig {
     OpenAiChatModel openAiChatModel(Properties properties) {
         ChatModelProperties chatModelProperties = properties.chatModel();
         return OpenAiChatModel.builder()
-            .listeners(List.of(new CustomerChatModelListener()))
+            //.listeners(List.of(new CustomerChatModelListener()))
             .baseUrl(chatModelProperties.baseUrl())
             .apiKey(chatModelProperties.apiKey())
             .organizationId(chatModelProperties.organizationId())
@@ -49,7 +54,31 @@ public class OpenaiConfig {
             .customHeaders(chatModelProperties.customHeaders())
             .build();
     }
-
+    @Bean
+    @ConditionalOnProperty(PREFIX + ".chat-model.api-key")
+    ChatAssistant chartAssistant(OpenAiChatModel openAiChatModel){
+       return dev.langchain4j.service.AiServices.create(ChatAssistant.class,openAiChatModel);
+    }
+    @Bean
+    @ConditionalOnProperty(PREFIX + ".chat-model.api-key")
+    MemoryChatAssistant memoryChatAssistant(OpenAiChatModel openAiChatModel){
+        return dev.langchain4j.service.AiServices
+                .builder(MemoryChatAssistant.class)
+                .chatLanguageModel(openAiChatModel)
+                .chatMemoryProvider(id -> MessageWindowChatMemory.withMaxMessages(10))
+                .build()
+                ;
+    }
+    @Bean
+    @ConditionalOnProperty(PREFIX + ".chat-model.api-key")
+    FunctionAssistant functionAssistant(OpenAiChatModel openAiChatModel){
+        return dev.langchain4j.service.AiServices
+                .builder(FunctionAssistant.class)
+                .chatLanguageModel(openAiChatModel)
+                .tools(new InvoiceHandler())
+                .build()
+                ;
+    }
     @Bean
     @ConditionalOnProperty(PREFIX + ".streaming-chat-model.api-key")
     OpenAiStreamingChatModel openAiStreamingChatModel(Properties properties) {
@@ -79,6 +108,12 @@ public class OpenaiConfig {
             .customHeaders(chatModelProperties.customHeaders())
             .build();
     }
+    @Bean
+    @ConditionalOnProperty(PREFIX + ".streaming-chat-model.api-key")
+    StreamChatAssistant streamChatAssistant(OpenAiStreamingChatModel streamingChatModel){
+        return dev.langchain4j.service.AiServices.create(StreamChatAssistant.class,streamingChatModel);
+    }
+
     @Bean
     @ConditionalOnProperty(PREFIX + ".language-model.api-key")
     OpenAiLanguageModel openAiLanguageModel(Properties properties) {
