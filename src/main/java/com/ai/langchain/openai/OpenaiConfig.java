@@ -1,12 +1,11 @@
 package com.ai.langchain.openai;
 
 import com.ai.langchain.fuc.handles.InvoiceHandler;
-import com.ai.langchain.service.ChatAssistant;
-import com.ai.langchain.service.FunctionAssistant;
-import com.ai.langchain.service.MemoryChatAssistant;
-import com.ai.langchain.service.StreamChatAssistant;
+import com.ai.langchain.service.*;
 import dev.langchain4j.memory.chat.MessageWindowChatMemory;
 import dev.langchain4j.model.openai.*;
+import dev.langchain4j.web.search.WebSearchTool;
+import dev.langchain4j.web.search.searchapi.SearchApiWebSearchEngine;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -76,6 +75,21 @@ public class OpenaiConfig {
                 .builder(FunctionAssistant.class)
                 .chatLanguageModel(openAiChatModel)
                 .tools(new InvoiceHandler())
+                .build()
+                ;
+    }
+    @Bean
+    @ConditionalOnProperty(PREFIX + ".chat-model.api-key")
+    WebsearchAssistant websearchAssistant(OpenAiChatModel openAiChatModel){
+        SearchApiWebSearchEngine searchEngine = SearchApiWebSearchEngine.builder()
+                .apiKey("a759fb82f3af64ccb")// 测试使用
+                .engine("google")
+                .build();
+
+        return dev.langchain4j.service.AiServices
+                .builder(WebsearchAssistant.class)
+                .chatLanguageModel(openAiChatModel)
+                .tools(new WebSearchTool(searchEngine))
                 .build()
                 ;
     }
