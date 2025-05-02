@@ -26,7 +26,7 @@ public class FunctionAssistantTest {
 
     @Test
     public void testWebsearchAssistant(){
-        String text = websearchAssistant.chat("今天20240429 上证指数是多少？");
+        String text = websearchAssistant.chat("今天20250429 上证指数是多少？");
         System.out.println(text);
     }
 }

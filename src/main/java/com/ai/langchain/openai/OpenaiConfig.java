@@ -6,6 +6,7 @@ import dev.langchain4j.memory.chat.MessageWindowChatMemory;
 import dev.langchain4j.model.openai.*;
 import dev.langchain4j.web.search.WebSearchTool;
 import dev.langchain4j.web.search.searchapi.SearchApiWebSearchEngine;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -20,7 +21,8 @@ import static com.ai.langchain.openai.Properties.PREFIX;
 @Configuration
 @EnableConfigurationProperties(Properties.class)
 public class OpenaiConfig {
-
+    @Value("${langchain4j.open-ai.websearch.api-key}")
+    private String google_web_key;
     @Bean
     @ConditionalOnProperty(PREFIX + ".chat-model.api-key")
     OpenAiChatModel openAiChatModel(Properties properties) {
@@ -82,7 +84,7 @@ public class OpenaiConfig {
     @ConditionalOnProperty(PREFIX + ".chat-model.api-key")
     WebsearchAssistant websearchAssistant(OpenAiChatModel openAiChatModel){
         SearchApiWebSearchEngine searchEngine = SearchApiWebSearchEngine.builder()
-                .apiKey("a759fb82f3af64ccb")// 测试使用
+                .apiKey(google_web_key)// 测试使用
                 .engine("google")
                 .build();
 
