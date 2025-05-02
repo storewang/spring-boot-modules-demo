@@ -1,6 +1,7 @@
 package com.ai.langchain.test;
 
 import com.ai.langchain.model.PersonalityTrait;
+import com.ai.langchain.service.ChatRagAssistant;
 import dev.langchain4j.classification.EmbeddingModelTextClassifier;
 import dev.langchain4j.data.embedding.Embedding;
 import dev.langchain4j.data.segment.TextSegment;

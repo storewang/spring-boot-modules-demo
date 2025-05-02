@@ -1,11 +1,17 @@
 package com.ai.langchain.embedding;
 
 import com.ai.langchain.model.PersonalityTrait;
+import com.ai.langchain.service.ChatRagAssistant;
 import dev.langchain4j.classification.EmbeddingModelTextClassifier;
 import dev.langchain4j.data.segment.TextSegment;
+import dev.langchain4j.memory.chat.MessageWindowChatMemory;
 import dev.langchain4j.model.embedding.EmbeddingModel;
+import dev.langchain4j.model.openai.OpenAiChatModel;
 import dev.langchain4j.model.openai.OpenAiEmbeddingModel;
+import dev.langchain4j.rag.content.retriever.EmbeddingStoreContentRetriever;
+import dev.langchain4j.service.AiServices;
 import dev.langchain4j.store.embedding.EmbeddingStore;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import dev.langchain4j.store.embedding.qdrant.QdrantEmbeddingStore;
@@ -14,6 +20,8 @@ import io.qdrant.client.QdrantGrpcClient;
 
 import java.util.List;
 import java.util.Map;
+
+import static com.ai.langchain.openai.Properties.PREFIX;
 
 /**
  * @author 石头
@@ -79,5 +87,20 @@ public class EmbeddingConfig {
     @Bean
     public EmbeddingModelTextClassifier<PersonalityTrait> textClassifier(EmbeddingModel embeddingModel) {
         return new EmbeddingModelTextClassifier(embeddingModel, examples);
+    }
+
+    @Bean
+    @ConditionalOnProperty(PREFIX + ".embedding-model.api-key")
+    ChatRagAssistant chatRagAssistant(OpenAiChatModel openAiChatModel,OpenAiEmbeddingModel embeddingModel,EmbeddingStore<TextSegment> embeddingStore){
+        EmbeddingStoreContentRetriever contentRetriever = EmbeddingStoreContentRetriever.builder()
+                .embeddingModel(embeddingModel)
+                .embeddingStore(embeddingStore)
+                .build();
+
+        return AiServices.builder(ChatRagAssistant.class)
+                .chatLanguageModel(openAiChatModel)
+                .chatMemory(MessageWindowChatMemory.withMaxMessages(10))
+                .contentRetriever(contentRetriever)
+                .build();
     }
 }

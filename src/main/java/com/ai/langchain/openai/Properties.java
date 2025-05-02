@@ -26,5 +26,5 @@ public record Properties(
     @NestedConfigurationProperty
     ImageModelProperties imageModel
 ) {
-    static final String PREFIX = "langchain4j.open-ai";
+    public static final String PREFIX = "langchain4j.open-ai";
 }
