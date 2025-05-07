@@ -1,5 +1,6 @@
 package com.ai.langchain.controller;
 
+import com.ai.langchain.model.LegalPrompt;
 import com.ai.langchain.service.StreamChatAssistant;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,5 +23,13 @@ public class DemoController {
     @GetMapping("/chat")
     public Flux<String> chat(@RequestParam("message") String message) {
         return chatAssistant.chat(message);
+    }
+
+    @GetMapping("/chat2")
+    public Flux<String> chat2(@RequestParam("message") String message) {
+        LegalPrompt prompt = new LegalPrompt();
+        prompt.setLegal("著作权");
+        prompt.setQuestion(message+"？");
+        return chatAssistant.chat4Legal(prompt);
     }
 }
