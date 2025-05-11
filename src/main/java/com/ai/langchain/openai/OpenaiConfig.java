@@ -2,8 +2,14 @@ package com.ai.langchain.openai;
 
 import com.ai.langchain.fuc.handles.InvoiceHandler;
 import com.ai.langchain.service.*;
+import dev.langchain4j.mcp.McpToolProvider;
+import dev.langchain4j.mcp.client.DefaultMcpClient;
+import dev.langchain4j.mcp.client.McpClient;
+import dev.langchain4j.mcp.client.transport.McpTransport;
+import dev.langchain4j.mcp.client.transport.http.HttpMcpTransport;
 import dev.langchain4j.memory.chat.MessageWindowChatMemory;
 import dev.langchain4j.model.openai.*;
+import dev.langchain4j.service.tool.ToolProvider;
 import dev.langchain4j.web.search.WebSearchTool;
 import dev.langchain4j.web.search.searchapi.SearchApiWebSearchEngine;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,6 +19,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
 
@@ -23,6 +30,9 @@ import static com.ai.langchain.openai.Properties.PREFIX;
 public class OpenaiConfig {
     @Value("${langchain4j.open-ai.websearch.api-key}")
     private String google_web_key;
+    @Value("${langchain4j.open-ai.mcp.sse-url}")
+    private String mcp_sse_url;
+
     @Bean
     @ConditionalOnProperty(PREFIX + ".chat-model.api-key")
     OpenAiChatModel openAiChatModel(Properties properties) {
@@ -77,6 +87,35 @@ public class OpenaiConfig {
                 .builder(FunctionAssistant.class)
                 .chatLanguageModel(openAiChatModel)
                 .tools(new InvoiceHandler())
+                .build()
+                ;
+    }
+    @Bean
+    @ConditionalOnProperty(PREFIX + ".mcp.sse-url")
+    McpTransport mcpTransport(){
+        return new HttpMcpTransport.Builder()
+                .sseUrl(mcp_sse_url)
+                .logRequests(true)
+                .logResponses(true)
+                .build();
+    }
+    @Bean
+    @ConditionalOnProperty(PREFIX + ".mcp.sse-url")
+    McpClient mcpClient(McpTransport mcpTransport){
+        return new DefaultMcpClient.Builder()
+                .transport(mcpTransport)
+                .build();
+    }
+    @Bean
+    @ConditionalOnProperty(PREFIX + ".mcp.sse-url")
+    McpFuncAssistant mcpFuncAssistant(McpClient mcpClient,OpenAiChatModel openAiChatModel){
+        ToolProvider toolProvider = McpToolProvider.builder()
+                .mcpClients(List.of(mcpClient))
+                .build();
+        return dev.langchain4j.service.AiServices
+                .builder(McpFuncAssistant.class)
+                .chatLanguageModel(openAiChatModel)
+                .toolProvider(toolProvider)
                 .build()
                 ;
     }

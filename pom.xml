@@ -13,9 +13,11 @@
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <langchain4j.version>0.36.1</langchain4j.version>
+        <langchain4j.version>0.36.2</langchain4j.version>
         <spring.boot.version>3.2.6</spring.boot.version>
         <testcontainers.version>1.20.3</testcontainers.version>
+        <okhttp.version>4.12.0</okhttp.version>
+        <jspecify.version>1.0.0</jspecify.version>
     </properties>
 
     <dependencies>
@@ -91,6 +93,20 @@
         </dependency>
 
         <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp-sse</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.squareup.okio</groupId>
+            <artifactId>okio</artifactId>
+            <version>2.9.0</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
@@ -112,6 +128,21 @@
                 <version>${spring.boot.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.squareup.okhttp3</groupId>
+                <artifactId>okhttp-bom</artifactId>
+                <version>${okhttp.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.squareup.okhttp3</groupId>
+                <artifactId>mockwebserver</artifactId>
+                <version>${okhttp.version}</version>
+                <scope>test</scope>
             </dependency>
 
             <dependency>
