@@ -4,6 +4,7 @@ import dev.langchain4j.data.message.AiMessage;
 import dev.langchain4j.data.message.ImageContent;
 import dev.langchain4j.data.message.TextContent;
 import dev.langchain4j.data.message.UserMessage;
+import dev.langchain4j.model.chat.response.ChatResponse;
 import dev.langchain4j.model.openai.OpenAiChatModel;
 import dev.langchain4j.model.output.Response;
 import org.junit.jupiter.api.Test;
@@ -37,7 +38,7 @@ public class OpenAi4ImageTest {
                 ,
                 ImageContent.from(encodeToString, "image/png")
         );
-        Response<AiMessage> response = openAiChatModel.generate(userMessage);
-        System.out.println(response.content().text());
+        ChatResponse response = openAiChatModel.chat(userMessage);
+        System.out.println(response.aiMessage().text());
     }
 }

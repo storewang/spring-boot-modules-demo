@@ -8,9 +8,11 @@ import dev.langchain4j.memory.chat.MessageWindowChatMemory;
 import dev.langchain4j.model.embedding.EmbeddingModel;
 import dev.langchain4j.model.openai.OpenAiChatModel;
 import dev.langchain4j.model.openai.OpenAiEmbeddingModel;
+import dev.langchain4j.openai.spring.AutoConfig;
 import dev.langchain4j.rag.content.retriever.EmbeddingStoreContentRetriever;
 import dev.langchain4j.service.AiServices;
 import dev.langchain4j.store.embedding.EmbeddingStore;
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,7 +23,6 @@ import io.qdrant.client.QdrantGrpcClient;
 import java.util.List;
 import java.util.Map;
 
-import static com.ai.langchain.openai.Properties.PREFIX;
 
 /**
  * @author 石头
@@ -29,7 +30,9 @@ import static com.ai.langchain.openai.Properties.PREFIX;
  * @date 2025/5/1
  **/
 @Configuration(proxyBeanMethods = false)
+@AutoConfigureAfter(AutoConfig.class)
 public class EmbeddingConfig {
+    static final String PREFIX = "langchain4j.open-ai";
     public static final Map<PersonalityTrait, List<String>> examples = Map.of(
             PersonalityTrait.EXTROVERT, List.of(
                     "我喜欢结识新朋友",
