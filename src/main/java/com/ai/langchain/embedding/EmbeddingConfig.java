@@ -101,7 +101,7 @@ public class EmbeddingConfig {
                 .build();
 
         return AiServices.builder(ChatRagAssistant.class)
-                .chatLanguageModel(openAiChatModel)
+                .chatModel(openAiChatModel)
                 .chatMemory(MessageWindowChatMemory.withMaxMessages(10))
                 .contentRetriever(contentRetriever)
                 .build();

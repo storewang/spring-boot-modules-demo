@@ -44,7 +44,7 @@ public class OpenaiConfig {
     MemoryChatAssistant memoryChatAssistant(OpenAiChatModel openAiChatModel){
         return dev.langchain4j.service.AiServices
                 .builder(MemoryChatAssistant.class)
-                .chatLanguageModel(openAiChatModel)
+                .chatModel(openAiChatModel)
                 .chatMemoryProvider(id -> MessageWindowChatMemory.withMaxMessages(10))
                 .build()
                 ;
@@ -54,7 +54,8 @@ public class OpenaiConfig {
     FunctionAssistant functionAssistant(OpenAiChatModel openAiChatModel){
         return dev.langchain4j.service.AiServices
                 .builder(FunctionAssistant.class)
-                .chatLanguageModel(openAiChatModel)
+                //.chatLanguageModel(openAiChatModel)
+                .chatModel(openAiChatModel)
                 .tools(new InvoiceHandler())
                 .build()
                 ;
@@ -83,7 +84,7 @@ public class OpenaiConfig {
                 .build();
         return dev.langchain4j.service.AiServices
                 .builder(McpFuncAssistant.class)
-                .chatLanguageModel(openAiChatModel)
+                .chatModel(openAiChatModel)
                 .toolProvider(toolProvider)
                 .build()
                 ;
@@ -98,7 +99,7 @@ public class OpenaiConfig {
 
         return dev.langchain4j.service.AiServices
                 .builder(WebsearchAssistant.class)
-                .chatLanguageModel(openAiChatModel)
+                .chatModel(openAiChatModel)
                 .tools(new WebSearchTool(searchEngine))
                 .build()
                 ;
